@@ -1,13 +1,17 @@
 print "If you start game when , push the Enter key. \n";
 my $Enter = <STDIN>;
 my $op;
+print "使いたい問題集を入力して下さい。\n";
+print "Eng:english , France:fran, Korian: hungule : ";
 
+my $chooser_lang=<STDIN>;
+chomp($chooser_lang);
 my $count;
 my $lines;
 my $c1;
 my $b1;
 my $answer;
-open($op ,"<", "./mondai.txt");
+open($op ,"<", "./$chooser_lang.txt");
 @lines = map { $_ } <$op>;
 
 print "--grep---"."\n";
