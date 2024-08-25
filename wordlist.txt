@@ -1,1 +1,3 @@
 Takesue: 0412
+access: アクセスする
+count: 数える
