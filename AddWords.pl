@@ -9,7 +9,7 @@ my $filename = 'wordlist.txt';
 sub add_word {
     my ($word, $meaning) = @_;
     open(my $fh, '>>', $filename) or die "Could not open file '$filename' $!";
-    print $fh "$word: $meaning\n";
+    print $fh $word."\n".$meaning."\n"	;
     close $fh;
     print "Added \"$word\" with meaning \"$meaning\" to the word list.\n";
 }
