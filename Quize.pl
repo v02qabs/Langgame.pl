@@ -8,11 +8,11 @@ use open ':std', ':encoding(UTF-8)';
 # キーが質問、値が答えのハッシュリファレンス
 # このバージョンでは、答えは基本的に単一行を想定します。
 my @quizzes = (
-    { question => "日本の首都は？", answer => "東京" },
-    { question => "世界で一番高い山は？", answer => "エベレスト" },
-    { question => "光の速さは約何km/s？", answer => "30万" },
-    { question => "Perlの創始者は？", answer => "ラリー・ウォール" },
-    { question => "金閣寺がある都道府県は？", answer => "京都" },
+    { question => "〜を曲がる。", answer => "turn" },
+    { question => "世話（名）", answer => "	care" },
+    { question => "〜を描写する。", answer => "describe" },
+    { question => "（費用が）〜かかる。", answer => "cost" },
+    { question => "加わる", answer => "join" },
 );
 
 my $score = 0;
