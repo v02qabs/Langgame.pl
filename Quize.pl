@@ -2,23 +2,39 @@
 use strict;
 use warnings;
 use utf8; # UTF-8を扱うためのモジュール
-use open ':std', ':encoding(UTF-8)';
+use open ':std', ':encoding(UTF-8)'; # 標準入出力とファイルをUTF-8で扱う
 
 # クイズデータ
-# キーが質問、値が答えのハッシュリファレンス
-# このバージョンでは、答えは基本的に単一行を想定します。
-my @quizzes = (
-    { question => "〜を曲がる。", answer => "turn" },
-    { question => "世話（名）", answer => "	care" },
-    { question => "〜を描写する。", answer => "describe" },
-    { question => "（費用が）〜かかる。", answer => "cost" },
-    { question => "加わる", answer => "join" },
-				{ question => "パン屋" , answer => "bakery"
-				},
-);
+my @quizzes;
+
+# words.csv ファイルから問題を読み込む
+my $filename = 'words.csv';
+open(my $fh, '<:encoding(UTF-8)', $filename)
+    or die "Could not open file '$filename': $!";
+
+while (my $line = <$fh>) {
+    chomp $line; # 行末の改行を削除
+    # CSV形式の行をカンマで分割
+    my ($question, $answer) = split(/,/, $line, 2); # 2は分割数を制限して、答えにカンマがあっても対応できるようにする
+
+    # 質問と答えの前後の空白をトリム
+    $question =~ s/^\s+|\s+$//g;
+    $answer =~ s/^\s+|\s+$//g;
+
+    # データが有効な場合のみ追加
+    if (defined $question && defined $answer && $question ne '' && $answer ne '') {
+        push @quizzes, { question => $question, answer => $answer };
+    }
+}
+close $fh;
 
 my $score = 0;
 my $total_questions = @quizzes;
+
+if ($total_questions == 0) {
+    print "エラー: 'words.csv' ファイルに問題が見つかりませんでした。ファイルが正しい形式で存在するか確認してください。\n";
+    exit;
+}
 
 print "--- Perl クイズゲームへようこそ！ ---\n";
 print "全部で $total_questions 問あります。\n\n";
@@ -37,7 +53,8 @@ foreach my $q_data (@quizzes) {
 
     # 正しい答えも、念のため前後の空白を削除して比較に備えます。
     my $normalized_correct_answer = $q_data->{answer};
-    $normalized_correct_answer =~ s/^\s+|\s+$//g;
+    # 正しい答えは既にファイル読み込み時にトリムされているので、ここでは不要ですが、
+    # 念のため残すこともできます。今回はファイル読み込み時に対応済みとします。
 
     if ($user_answer eq $normalized_correct_answer) {
         print "正解！\n\n";
