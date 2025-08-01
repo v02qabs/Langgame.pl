@@ -14,7 +14,7 @@ my @quizzes = (
     { question => "（費用が）〜かかる。", answer => "cost" },
     { question => "加わる", answer => "join" },
 				{ question => "パン屋" , answer => "bakery"
-				"},
+				},
 );
 
 my $score = 0;
